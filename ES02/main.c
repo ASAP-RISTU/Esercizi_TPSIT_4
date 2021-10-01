@@ -10,7 +10,6 @@ dicisplina con la media piu alta
 typedef struct {
     char nome[LUNG];
     char cognome[LUNG];
-    int matricola;
     float votoMate;
     float votoInfo;
     float votoIta;
@@ -28,10 +27,6 @@ void inserisciDati(studente v[], int n) {
 
         printf("inserisci il cognome: ");
         scanf("%s",v[k].cognome);
-        fflush(stdin);
-
-        printf("inserisci il numero di matricola: ");
-        scanf("%d",&v[k].matricola);
         fflush(stdin);
 
         printf("inserisci il voto di matematica: ");
@@ -57,19 +52,18 @@ void media(studente v[],int n) {
     }
     mediaMate=mediaMate/n;
     mediaInfo=mediaInfo/n;
-    mediaIta=mediaInfo/n;
+    mediaIta=mediaIta/n;
 
-    if((mediaMate>mediaInfo)&&(mediaMate>mediaIta)){
+    if( mediaMate>mediaInfo && mediaMate>mediaIta){
         printf("la media piu alta della classe e' quella di matematica");
         }
 
-    if((mediaMate<mediaInfo)&&(mediaInfo>mediaIta)){
+    if( mediaMate<mediaInfo && mediaInfo>mediaIta){
         printf("la media piu alta della classe e' quella di informatica");}
 
-     if((mediaMate<mediaIta)&&(mediaInfo<mediaIta)){
+     if(mediaIta>mediaMate && mediaIta>mediaInfo){
         printf("la media piu alta della classe e' quella di italiano");
         }
-
 }
 
 int main() {
