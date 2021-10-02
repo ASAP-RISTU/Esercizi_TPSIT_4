@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1633163585 source:c:\users\davide\desktop\scuola\tpist\c\esbubblesort\main.c
+	<stdio.h>
+	<stdlib.h>
+
