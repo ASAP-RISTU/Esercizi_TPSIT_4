@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #define DIM 5
 
+//fare un Bubble Sort senza usare [e]
+
 void ordinaVettore(int vett[], int n) {
     int sup, i, a;
 
