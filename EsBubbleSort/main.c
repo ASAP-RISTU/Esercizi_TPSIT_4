@@ -9,7 +9,7 @@ void ordinaVettore(int vett[], int n) {
 
     for(sup = n - 1; sup > 0; sup--) {
         for(i = 0; i < sup; i++) {
-            if(*(vett+i+1) < *(vett+i)) {
+            if(*(vett+i+1) < *(vett+i)) {        // vett è un puntatore, che punta all'inzio della pila del vettore; il +k serve per scorrere le celle
                 a = *(vett+i+1);
                 *(vett+i+1) = *(vett+i);
                *(vett+i) = a;
