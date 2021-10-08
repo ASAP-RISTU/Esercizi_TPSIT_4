@@ -5,59 +5,59 @@
 #define LUNG 30
 #include <ctype.h>
 
-typedef struct {
+typedef struct {        //inizializzazione struttura
 
-    char indice;
+    char num[LUNG];
     char titolo[LUNG];
-    char genere[LUNG];
-    int anno;
-    char disponibile[LUNG];
+    char tipologia[LUNG];
+    char anno[LUNG];
+    char disp[LUNG];
 
 } film;
 
-void caricaCatalogo(char file[],int n, film v[]) {
+void leggi(film v[], int n, char nomefilm[]) {
     FILE *fp;
-    int k=0;
-    char *token;
-
-
-    fp=fopen(file,"r");
-
-    if(fp!=NULL) {
-        for(k=0; k<n; k++) {
-
-            token = strtok(fp,",");
-
-           v[k].indice= atoi(token);
-            /*
-                fscanf(fp,"%d",&v[k].indice);
-                str=strtok(NULL,',');
-                fgets(v[k].titolo,n,fp);
-                str=strtok(NULL,',');
-                fgets(v[k].genere,n,fp);
-                str=strtok(NULL,',');
-                fscanf(fp,"%d",&v[k].anno);
-                str=strtok(NULL,',');
-                fgets(v[k].disponibile,n,fp);
-                */
-
-
+    int conta=0;
+    char line[100];
+    fp = fopen(nomefilm, "r");
+    for(int i=0; i<n; i++) {
+        fgets(line, 100, fp);
+        char* pezzo = strtok(line, ",");
+        while(pezzo != NULL) {
+            switch(conta) {
+            case 0:
+                strcpy(v[i].num, pezzo);
+                break;
+            case 1:
+                strcpy(v[i].titolo, pezzo);
+                break;
+            case 2:
+                strcpy(v[i].tipologia, pezzo);
+                break;
+            case 3:
+                strcpy(v[i].anno, pezzo);
+                break;
+            case 4:
+                strcpy(v[i].disp, pezzo);
+                break;
+            }
+            conta++;
+            pezzo = strtok(NULL, ",");
         }
+        conta=0;
     }
-
 }
 
 void stampa(film v[],int n) {
 
     for(int k=0; k<n; k++) {
-       // printf("%d %s  %s  %d  %s ",v[k].indice,v[k].titolo,v[k].genere,v[k].anno,v[k].disponibile);
-        printf("%s\n" ,v[k].indice);
+        printf("%s %s  %s  %s  %s \n",v[k].num,v[k].titolo,v[k].tipologia,v[k].anno,v[k].disp);
     }
 }
 
 int main() {
     film catalogo[LUNG];
-    caricaCatalogo("listafilm.csv.txt",LUNG,catalogo);
+    leggi(catalogo,LUNG,"listafilm.csv.txt");
     stampa(catalogo,LUNG);
     return 0;
 }
