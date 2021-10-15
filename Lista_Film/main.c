@@ -46,6 +46,7 @@ void leggi(film v[], int n, char nomefilm[]) {
         }
         conta=0;
     }
+    fclose(fp);
 }
 
 void stampa(film v[],int n) {
