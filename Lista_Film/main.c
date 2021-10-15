@@ -3,11 +3,11 @@
 #include <string.h>
 #include <stdbool.h>
 #define LUNG 30
-#include <ctype.h>
 
-typedef struct {        //inizializzazione struttura
 
-    int  num;
+typedef struct {
+
+    char num[LUNG];
     char titolo[LUNG];
     char tipologia[LUNG];
     char anno[LUNG];
@@ -19,18 +19,14 @@ void leggi(film v[], int n, char nomefilm[]) {
     FILE *fp;
     int conta=0;
     char line[100];
-
     fp = fopen(nomefilm, "r");
-
     for(int i=0; i<n; i++) {
         fgets(line, 100, fp);
         char* pezzo = strtok(line, ",");
-
         while(pezzo != NULL) {
             switch(conta) {
             case 0:
-                atoi(pezzo);
-                (v+i)->num=*pezzo;
+                strcpy((v+i)->num , pezzo);
                 break;
             case 1:
                 strcpy((v+i)->titolo, pezzo);
@@ -53,9 +49,9 @@ void leggi(film v[], int n, char nomefilm[]) {
 }
 
 void stampa(film v[],int n) {
-
+printf("\t%Numero \tTitolo  \tTipologia  \tAnno  \tDisponibilita' \n");
     for(int k=0; k<n; k++) {
-        printf("%d %s  %s  %s  %s \n",(v+k)->num,(v+k)->titolo,(v+k)->tipologia,(v+k)->anno,(v+k)->disp);
+        printf("\t%s \t%s  \t%s  \t%s  \t%s \n",(v+k)->num,(v+k)->titolo,(v+k)->tipologia,(v+k)->anno,(v+k)->disp);
     }
 }
 
