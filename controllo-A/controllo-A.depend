@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1634653075 source:c:\users\davide\desktop\scuola\tpist\c\controllo-a\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
