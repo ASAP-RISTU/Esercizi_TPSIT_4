@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1634287294 source:c:\users\flavi\desktop\scuola\tpsit\esercizi c\es04\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+
