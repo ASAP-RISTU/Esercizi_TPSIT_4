@@ -9,7 +9,7 @@ bool controllo(char v[]) {
     char trovare= 'A';  //carattere da trovare
 
     while(ok==false && k<10 && v[k]!='\n') {   // while che guarda che ok==false , che si guardino solo i primi 10 caratteri e se la stringa finisce prima si ferma il ciclo
-        if(v[k]==trovare) {
+        if(*(v+k)==trovare) {
             ok=true;        //se il carattere == trovare la variabile ok diventa true
         } else {
             k++;        // senno si incremneta il contatore
