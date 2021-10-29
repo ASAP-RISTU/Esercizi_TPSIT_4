@@ -4,7 +4,7 @@
 #define LUNG1 10
 #define LUNG2 50
 
-/*Concatenare due stringhe senza strcat*/
+//Concatenare due stringhe senza strcat
 
 void unisci(char *str1, char *str2)
 {
@@ -14,7 +14,7 @@ void unisci(char *str1, char *str2)
     {
         *(str1+n1+k)= *(str2+k);
     }
-    *(str1+n1+n2)='\0';
+    *(str1+n1+n2)='\0';  //ultimo carattere della stringa viene settato a \0
 }
 
 int main()
