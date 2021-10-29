@@ -17,13 +17,18 @@ void inverti(int v[],int dim) {
 void stampa(int v[],int dim){  //ciclo for per stampare il vettore
 for(int k=0;k<dim;k++){
     printf("%d ", *(v+k));
+}    
 }
-}
+
 int main() {
-    int v[MAX];
+    int n;
+    printf("Quanti numeri da inserire: ");
+    scanf("%d", &n);
+    int *v=(int*)malloc(n*sizeof(int));
+    
     for(int k=0; k<MAX; k++) {      //ciclo per caricare il vettore
         printf("inserisci valore: ");
-        scanf("%d",&v[k]);
+        scanf("%d"(v+k));
     }
     inverti(v,MAX);
     stampa(v,MAX);
