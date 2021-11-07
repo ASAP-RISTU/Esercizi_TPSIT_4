@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1636278794 source:c:\users\davide\desktop\scuola\tpist\c\array_2d_malloc\main.c
+	<stdio.h>
+	<stdlib.h>
+
