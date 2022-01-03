@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1641135524 source:c:\users\flavi\desktop\scuola\tpsit\esercizi c\vacanze2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
