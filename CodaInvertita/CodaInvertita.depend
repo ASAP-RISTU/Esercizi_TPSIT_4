@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1643124881 source:c:\users\flavi\desktop\scuola\tpsit\esercizi c\codainvertita\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
