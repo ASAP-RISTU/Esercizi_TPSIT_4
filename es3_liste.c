@@ -2,7 +2,8 @@
 1)Crea un programma che:
 a)immetta il numero dei nodi inserendo da tastiera i valori per ogni nodo
 b)stampi la lista dei valori inseriti
-c)stampi la stessa lista cancellando l’ultimo nodp
+c)stampi la stessa lista cancellando lâ€™ultimo nodo
+Davide Ristorto 15/12/2021
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +21,7 @@ void caricavett(int vett[], int n) { //presa in input dei valori numerici
     }
 }
 
-Nodo * crealista( int* v, int n) {
+Nodo * crealista( int* v, int n) { //si crea un nuovo nodo
     Nodo * head=NULL;
     Nodo *r=(Nodo*)malloc(sizeof(Nodo));
     Nodo * cur=head;
