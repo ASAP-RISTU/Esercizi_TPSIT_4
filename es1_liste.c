@@ -1,3 +1,5 @@
+//Caricare una lista
+//Davide Ristorto 10/12/2021
 #include <stdio.h>
 
 typedef struct elem {
@@ -21,8 +23,7 @@ struct elem **list2vet(struct elem *p) {
         return v;
     } else return NULL; /* lista vuota */
 }
-struct elem *crealista(int k) { /* funzione di appoggio, non richiesta */
-    /* crea una lista di k record */
+struct elem *crealista(int k) { //crea una lista
     int i;
     struct elem *l, *app;
     char c[21];
@@ -44,10 +45,10 @@ struct elem *crealista(int k) { /* funzione di appoggio, non richiesta */
         return l;
     }
 }
-main () { /* programma principale di test, non richiesto dal compito */
+main () {
     struct elem *p1, **v;
     int i;
-    p1 = crealista(5); /*crea una lista di 3 stringhe */
+    p1 = crealista(5); //crea una lista di 3 stringhe
     v = list2vet(p1);
     for(i = 0; i < 5; ++i)
         printf("Nell elemento %d di v ce: %s\n",i,v[i]->nome);
