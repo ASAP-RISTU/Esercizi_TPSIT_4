@@ -1,4 +1,6 @@
 //esercizio 3
+//scrivere la struttura e i prototipi di funzioni usate per gestire le i dati dei pazienti in ospedale
+//Davide Ristorto 28/12/2021
 #include <stdio.h>
 #include <stdlib.h>
 
