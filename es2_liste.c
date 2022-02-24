@@ -1,8 +1,8 @@
-/*
-Si
-scriva la funzione che stampa a terminale i valori contenuti nella lista in
+
+/*scrivere la funzione che stampa a terminale i valori contenuti nella lista in
 ordine inverso rispetto a quello della lista stessa (leggendoli dalla lista,
 non dal vettore).
+Davide Ristorto 22/12/2021
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +20,7 @@ void caricavett(int vett[], int n) { //presa in input dei valori numerici
     }
 }
 
-Nodo * crealista( int* v, int n) {
+Nodo * crealista( int* v, int n) { //crea un nuovo nodo
     Nodo * head=NULL;
     Nodo *r=(Nodo*)malloc(sizeof(Nodo));
     Nodo * cur=head;
