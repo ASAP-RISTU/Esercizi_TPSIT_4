@@ -1,3 +1,5 @@
+//Creare un puntatore ad interi e a char e stampare il loro valore e il riferimento in memoria
+//Davide Ristorto 25/11/2021
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,7 +8,7 @@ int main()
     char *puntC;        //dichiarazione puntatori
     int *puntInt;
 
-    puntInt = (int *) malloc(1*sizeof(int));       //allocazione
+    puntInt = (int *) malloc(1*sizeof(int));       //allocazione dei puntatori
     puntC = (char *)malloc(1*sizeof(char));
 
     *puntInt = 5;       //assegnamento
