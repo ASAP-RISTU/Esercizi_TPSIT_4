@@ -1,10 +1,12 @@
+//data una stringa determianre se è palindroma
+//Davide Ristorto 17/10/2021
 #include <stdio.h>
 #include <stdlib.h>
 #define LUNG 20
 #include <string.h>
 #include <stdbool.h>
 
-bool polindormo(char st[],int dim) {
+bool polindormo(char st[],int dim) { //funzione che restituisce true se la stringa è palindroma, false se non lo è
     bool ok=true;
     int i=0;
 
@@ -18,7 +20,7 @@ bool polindormo(char st[],int dim) {
     return ok;
 }
 
-int dimStringa(char stringa[]) {
+int dimStringa(char stringa[]) {  //funzione che serve per determinare la lunghezza di carattere della stringa
     int k=0;
     int conta=0;
     for(k=0; *(stringa+k)!='\0'; k++) {
