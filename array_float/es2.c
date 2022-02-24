@@ -1,3 +1,6 @@
+//Caricare un vettore, trovare gli elementi disgiunti e sommarli
+//Davide Ristorto 7/10/2021
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -7,7 +10,7 @@ int main() {
     printf("dimensione del vettore: ");
     scanf("%d", &dim);
 
-    float *vet = (float *)malloc(dim*sizeof(float));
+    float *vet = (float *)malloc(dim*sizeof(float)); //allocazione dell'array con la malloc
 
     float *p;  //puntatore di appoggio
 
@@ -19,7 +22,7 @@ int main() {
     float somma=0;
     bool uguale=false;
 
-    for(int k=0; k<dim; k++) {
+    for(int k=0; k<dim; k++) { //vengono trovati gli elementi del vettore disgiunti
         uguale = false;
 
         for(int i=0; i<k; i++) {
