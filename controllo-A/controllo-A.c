@@ -1,3 +1,6 @@
+//prendere in input una stringa e verificare se il carattere 'A' è presente tra i primi 10 caratteri nella stringa
+//Davide Ristorto 30/09/2021
+
 #include <stdio.h>
 #include <stdlib.h>
 #define LUNG 100
