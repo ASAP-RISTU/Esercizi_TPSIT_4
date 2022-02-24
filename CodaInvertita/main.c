@@ -1,19 +1,21 @@
+//caricare una coda di valori interi e stampare i valori nel verso opposto
+//Davide Ristorto 12/12/2021
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct s_queue_node {
+typedef struct s_queue_node { //creazione della struttura 
     int elemento;
     struct s_queue_node*next;
 
 } Queue_node;
 
-int is_empty(Queue_node*head) {
+int is_empty(Queue_node*head) {  //funzione che controlla se la coda è vuota
     if(head==NULL) return 1;
     else
         return 0;
 }
 
-void enqueue(Queue_node**head,Queue_node**tail,Queue_node*element) {
+void enqueue(Queue_node**head,Queue_node**tail,Queue_node*element) {   //funzione per creare un nuovo nodo e assegnare un valore al nodo precedente
     if(is_empty(*head)) {
         *head=element;
     } else {
@@ -23,7 +25,7 @@ void enqueue(Queue_node**head,Queue_node**tail,Queue_node*element) {
     element->next=NULL;
 }
 
-Queue_node*dequeue(Queue_node**head,Queue_node**tail) {
+Queue_node*dequeue(Queue_node**head,Queue_node**tail) { //disalloca l'ultimo nodo della coda
     Queue_node*ret=*head;
 
     if(is_empty(*head)) {
@@ -37,7 +39,7 @@ Queue_node*dequeue(Queue_node**head,Queue_node**tail) {
     return ret;
 }
 
-Queue_node*dequeueVal(Queue_node**head,Queue_node**tail) {
+Queue_node*dequeueVal(Queue_node**head,Queue_node**tail) { //restituisce l'elemento dell'ultimo nodo della coda
     Queue_node*ret=*head;
 
     if(is_empty(*head)) {
