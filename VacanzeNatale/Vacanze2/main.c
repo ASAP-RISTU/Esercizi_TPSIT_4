@@ -1,4 +1,6 @@
 //es 2 delle vacanze
+//Scrivere un programma che legga una sequenza di caratteri e li stampi in ordine inverso. Usa una pila.
+//Davide Ristorto 28/12/2021
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
