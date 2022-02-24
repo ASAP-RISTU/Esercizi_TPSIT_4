@@ -1,3 +1,6 @@
+//dato un file csv con una serie di film e i loro dati, stamparli a terminale
+//Davide Ristorto 14/10/2021
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,7 +8,7 @@
 #define LUNG 30
 
 
-typedef struct {
+typedef struct { //struttura con i campi dato dei singolo film
 
     char num[LUNG];
     char titolo[LUNG];
@@ -15,14 +18,14 @@ typedef struct {
 
 } film;
 
-void leggi(film v[], int n, char nomefilm[]) {
+void leggi(film v[], int n, char nomefilm[]) {   //funzione per leggere il file csv
     FILE *fp;
     int conta=0;
     char line[100];
     fp = fopen(nomefilm, "r");
     for(int i=0; i<n; i++) {
         fgets(line, 100, fp);
-        char* pezzo = strtok(line, ",");
+        char* pezzo = strtok(line, ","); //si usa la strtok per separare le stringe intervallate dalla virgola
         while(pezzo != NULL) {
             switch(conta) {
             case 0:
@@ -49,7 +52,7 @@ void leggi(film v[], int n, char nomefilm[]) {
     fclose(fp);
 }
 
-void stampa(film v[],int n) {
+void stampa(film v[],int n) {  //funzione per la stampa della lista dei film formattata
 printf("\t%Numero \tTitolo  \tTipologia  \tAnno  \tDisponibilita' \n");
     for(int k=0; k<n; k++) {
         printf("\t%s \t%s  \t%s  \t%s  \t%s \n",(v+k)->num,(v+k)->titolo,(v+k)->tipologia,(v+k)->anno,(v+k)->disp);
@@ -57,7 +60,7 @@ printf("\t%Numero \tTitolo  \tTipologia  \tAnno  \tDisponibilita' \n");
 }
 
 int main() {
-    film catalogo[LUNG];
+    film catalogo[LUNG]; //vettore catalogo di tipo struttura film
     leggi(catalogo,LUNG,"listafilm.csv.txt");
     stampa(catalogo,LUNG);
     return 0;
