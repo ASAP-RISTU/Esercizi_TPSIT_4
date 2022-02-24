@@ -2,12 +2,13 @@
 Crea un programma che:
 a) immetta il numero dei nodi inserendo da tastiera i valori per ogni nodo
 b) stampi la lista dei valori inseriti
-c) inserisca un nuovo nodo all&#39;inizio della lista
+c) inserisca un nuovo nodo all'inizio della lista
+Davide Ristorto 17/12/2021
 */
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct nodo {
+typedef struct nodo { //LISTA
     int num;
     struct nodo * next;
 } Nodo;
@@ -60,7 +61,7 @@ int main() {
     int aggiunto;   //aggiunta di un valore a inizio lista
     printf("valore da aggiungere: ");
     scanf("%d",&aggiunto);
-    Nodo * head2 = (Nodo*)malloc(sizeof(Nodo));
+    Nodo * head2 = (Nodo*)malloc(sizeof(Nodo)); //  allocazione di un nuovo nodo
     head2->num=aggiunto;
     head2->next=head;
     printf("lista con valore aggiunto\n");
