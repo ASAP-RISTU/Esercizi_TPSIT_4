@@ -1,10 +1,11 @@
+//Concatenare due stringhe senza strcat
+//Davide Ristorto 29/10/2021
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #define LUNG1 10
 #define LUNG2 50
-
-//Concatenare due stringhe senza strcat
 
 void unisci(char *str1, char *str2)
 {
