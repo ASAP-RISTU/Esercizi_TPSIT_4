@@ -1,3 +1,5 @@
+//caricare una matrice di interi usando la malloc e a fine esercizioe deallocarla
+//Davide Ristorto 1/10/2021
 #include <stdio.h>
 #include <stdlib.h>
 
