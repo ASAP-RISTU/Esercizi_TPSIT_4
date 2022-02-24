@@ -1,3 +1,6 @@
+//Chiedere il numero di colonne e righe di una matrice e caricarla di numeri interi
+//Davide Ristorto 4/11/2021
+
 #include <stdio.h>
 #include <stdlib.h>
 #define NC 10
