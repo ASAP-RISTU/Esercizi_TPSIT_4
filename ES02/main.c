@@ -1,11 +1,14 @@
+/* struttura per memorizzare i dati degli studenti e i voti di ita,mate,info.
+ e trovare la dicisplina con la media piu alta
+Davide Ristorto 17/10/2021
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #define LUNG 50
 #define NClass 3
 
-/* struttura per memorizzare i dati degli studenti e i voti di ita,mate,info.
-dicisplina con la media piu alta
-*/
+
 
 typedef struct {
     char nome[LUNG];
