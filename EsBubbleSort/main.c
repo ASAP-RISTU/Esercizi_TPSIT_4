@@ -1,8 +1,8 @@
+//ricreare l'algoritmo di ordinamento BubbleSort senza accedere direttamente alla cella del vettore (es vett[0..1..2...]
+//Davide Ristorto 4/10/2021
 #include <stdio.h>
 #include <stdlib.h>
 #define DIM 5
-
-//fare un Bubble Sort senza usare [e]
 
 void ordinaVettore(int vett[], int n) {
     int sup, i, a;
