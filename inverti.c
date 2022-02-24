@@ -1,3 +1,6 @@
+//utilizzando l'aritmetica dei puntatori, caricare un vettore di interi e ricaricarci i dati nell'ordine opposto
+//Davide Ristorto 29/10/2021
+
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 5
