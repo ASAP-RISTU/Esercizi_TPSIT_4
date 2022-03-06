@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1646484676 source:c:\users\davide\desktop\scuola\tpist\c\es2preparazioe\main.c
+	<stdio.h>
+	<stdlib.h>
+
