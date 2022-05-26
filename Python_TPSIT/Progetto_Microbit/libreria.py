@@ -27,8 +27,9 @@ def specchiaPosizione(posizione, schermo):
     return Vector2(x % w, y % h)
 
 
-# rimavalza la posizione se si tocca il bordo
+# rimbaza la posizione se si tocca il bordo
 def rimbalzaPosizione(posizione, velocità, raggio, schermo):
+    # piccolo cambiamenti della velocità per evitare loop
     aggiuntaX = random.uniform(-0.3, 0.3)
     aggiuntaY = random.uniform(-0.3, 0.3)
     Vx, Vy = velocità
@@ -48,23 +49,6 @@ def rimbalza(velocità):
     return Vector2(Vx, Vy)
 
 
-"""def posizioneCasuale(schermo):  # crash per troppe ricursioni
-    posX = random.randrange(50, schermo.get_width()-50)
-    posY = random.randrange(50, schermo.get_height()-50)
-    pos = Vector2(posX, posY)
-    controllo = True
-
-    for posizione in listaPosizioni:
-        if pos.distance_to(posizione) < 150:
-            controllo = False
-            break
-    if controllo:
-        listaPosizioni.append(pos)
-        return pos
-    else:
-        return posizioneCasuale(schermo)"""
-
-
 def posizioneCasuale(schermo):
     run = True
     while run:
@@ -81,14 +65,14 @@ def posizioneCasuale(schermo):
     return pos
 
 
+def cancellaLista():
+    listaPosizioni = []
+
+
 def ramdomVector2(schermo):
     posX = random.randrange(50, schermo.get_width()-50)
     posY = random.randrange(50, schermo.get_height()-50)
     return Vector2(posX, posY)
-
-
-def cancellaLista():
-    listaPosizioni = []
 
 
 def velocitàCasuale(minV, maxV):

@@ -1,6 +1,5 @@
-from random import random
 from pygame.math import Vector2  # gestione cordinate
-from libreria import carica_immagini, posizioneCasuale, rimbalza, rimbalzaPosizione, specchiaPosizione, velocitàCasuale, carica_souno
+from libreria import carica_immagini, rimbalza, rimbalzaPosizione, specchiaPosizione, velocitàCasuale, carica_souno
 from pygame.transform import rotozoom
 
 UP = Vector2(0, -1)  # manda gli oggetti verso l'alto
@@ -14,8 +13,8 @@ class GameObject:  # classe con i metodi in comune per tutti gli oggetti
         self.vel = Vector2(vel)
 
     def draw(self, schermo):  # disegna l'oggetto
-        blit_posizione = self.posizione - Vector2(self.raggio)
-        schermo.blit(self.sprite, blit_posizione)
+        pos = self.posizione - Vector2(self.raggio)
+        schermo.blit(self.sprite, pos)
 
     def move(self, shermo):  # sposta l'oggetto
         self.posizione += self.vel
@@ -35,12 +34,12 @@ class GameObject:  # classe con i metodi in comune per tutti gli oggetti
 
 
 class Razzo(GameObject):  # classe derivata da GameObject
-    ROTAZIONE = 3
+    SENSO = 3
     ACCELERAZIONE = 0.1
     VEL_PROIETTILE = 3
 
-    def __init__(self, posizione, creaProiettile):
-        self.creaProiettile = creaProiettile
+    def __init__(self, posizione, listaProiettili):
+        self.listaProiettili = listaProiettili
         self.suono = carica_souno("laser.wav")
         self.suono.set_volume(0.3)
         self.direzione = Vector2(UP)
@@ -49,9 +48,12 @@ class Razzo(GameObject):  # classe derivata da GameObject
             "rocket.png", (70, 120)), Vector2(0, 0))
 
     def ruota(self, senso):  # gestione rotazione
-        segno = 1 if senso == "dx" else -1
-        angolo = self.ROTAZIONE * segno
-        self.direzione = self.direzione.rotate(angolo)
+        if senso == "dx":
+            segno = 1
+        else:
+            segno = -1
+        rotazione = self.SENSO * segno
+        self.direzione = self.direzione.rotate(rotazione)
 
     def accellera(self):
         self.vel += self.direzione * self.ACCELERAZIONE
@@ -60,22 +62,23 @@ class Razzo(GameObject):  # classe derivata da GameObject
         self.vel -= self.direzione * self.ACCELERAZIONE
 
     def frena(self):
-        self.vel *= 0.7
+        self.vel *= 0.5
 
     def spara(self):  # creo proiettile
         vel_proiettile = self.direzione * self.VEL_PROIETTILE + self.vel
         proiettile = Proiettile(self.posizione, vel_proiettile)
-        self.creaProiettile(proiettile)
+        self.listaProiettili(proiettile)
         self.suono.set_volume(0.1)
         self.suono.play()
 
     def draw(self, schermo):
-        angolo = self.direzione.angle_to(UP)
+        angolo = self.direzione.angle_to(UP)  # conversione da gradia a Vector2
         spirte_ruotato = rotozoom(self.sprite, angolo, 1)
-        rotated_surface_size = Vector2(spirte_ruotato.get_size())
+        superficie_ruotata = Vector2(spirte_ruotato.get_size())
         # ruotare il razzo in modo da centrato
-        blit_position = self.posizione - rotated_surface_size / 2
-        schermo.blit(spirte_ruotato, blit_position)
+        # viene ricalcolato il centro dello srpite
+        pos = self.posizione - superficie_ruotata / 2
+        schermo.blit(spirte_ruotato, pos)
 
     def move(self, schermo):  # gestione movimento
         self.posizione = specchiaPosizione(
@@ -86,6 +89,7 @@ class Asteroide(GameObject):
     def __init__(self, posizione, creaAsteoide, dimensione=3):
 
         self.dimensione = dimensione
+        # creaAsteoide è una funzione passata come parametro
         self.creaAsteroide = creaAsteoide
         dimensioni = {3: 1, 2: 0.5, 1: 0.25}
         scala = 100*dimensioni[dimensione]
@@ -101,9 +105,7 @@ class Asteroide(GameObject):
 
                 asteroide = Asteroide(
                     self.posizione+aggiuntaPos[i], self.creaAsteroide, self.dimensione-1)
-                #asteroide.vel = velocitàCasuale(1, 2)
                 self.creaAsteroide(asteroide)
-                #asteroide.vel = rimbalza(self.vel)
                 asteroide.vel = velocitàCasuale(1, 2)
 
     def move(self, schermo):
@@ -117,4 +119,4 @@ class Asteroide(GameObject):
 
 class Proiettile(GameObject):
     def __init__(self, posizione, vel):
-        super().__init__(posizione, carica_immagini("bullet.png", (10, 10)), vel)
+        super().__init__(posizione, carica_immagini("bullet.png", (15, 15)), vel)

@@ -3,18 +3,19 @@ from libreria import carica_immagini, posizioneCasuale, carica_souno, cancellaLi
 from oggetti_gioco import Asteroide, Razzo
 import time
 from pygame.math import Vector2
-import threading
+from threading import Thread
 import queue
 import serial
 
-CODA_MODIMENTI = queue.Queue()
+CODA_MOVIMENTI = queue.Queue()
 
 
 class Asteroids():
     DISTANZA_MINIMA = 250
     WIDTH = 1000
     HEIGHT = 800
-    MAX_LEVEL = 3
+    MAX_LEVEL = 2
+    N_VITE = 3
 
     def __init__(self):
         pygame.init()
@@ -35,13 +36,11 @@ class Asteroids():
         self.clock = pygame.time.Clock()  # gestione tempo
         self.direzione, self.movimento = None, None
         self.pulsanteA, self.pulsanteB = None, None
-        self.nVite = 3
         self.continua = True
 
     def creaAsteroidi(self):
         if len(self.asteroidi) < 1:
             cancellaLista()
-
             for _ in range(self.nLivello):  # spawn asteroidi lontani dal razzo
                 while True:
                     posizione = posizioneCasuale(self.screen)
@@ -50,10 +49,11 @@ class Asteroids():
 
                 self.asteroidi.append(
                     Asteroide(posizione, self.asteroidi.append))
-            self.nLivello += 1
 
     def getOggetti(self):
+        # passo gli oggetti dentro le liste
         oggetti = [*self.asteroidi, *self.proiettili]
+
         if self.razzo:
             oggetti.append(self.razzo)
         return oggetti
@@ -63,12 +63,12 @@ class Asteroids():
         for oggetto in self.getOggetti():
             oggetto.draw(self.screen)
         pygame.display.flip()
-        self.clock.tick(50)  # velocità di gioco
+        self.clock.tick(50)
 
     def gestioneInput(self):  # gioco sia da tastiera che da microbit
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                quit()
+                self.continua = False
             # dentro al ciclo così non si può spare all' inifito
             elif self.razzo:
                 if (event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE):
@@ -87,7 +87,7 @@ class Asteroids():
             elif tasto[pygame.K_DOWN] or self.movimento == "indietro":
                 self.razzo.rallenta()
 
-            if self.pulsanteB == "PREMUTO":  # evitare spari multipli
+            if self.pulsanteB == "PREMUTO":
                 self.razzo.spara()
                 self.pulsanteB = "NO"
 
@@ -112,6 +112,9 @@ class Asteroids():
                     if asteroide.collisione(asteroide2):
                         asteroide.scontro()
 
+        # uso i puntatori[:] poichè evito ValueError: list.remove(x): x not in list
+        # modifico la lista senza modificare il puntatore alla lista
+
         # eliminazione proiettile
         for proiettile in self.proiettili[:]:
             if not self.screen.get_rect().collidepoint(proiettile.posizione):
@@ -124,10 +127,15 @@ class Asteroids():
                     self.asteroidi.remove(asteroide)
                     self.proiettili.remove(proiettile)
                     asteroide.separaAsteroide()
-        if len(self.asteroidi) == 0 and self.nLivello < self.MAX_LEVEL:
-            self.creaAsteroidi()
-        elif len(self.asteroidi) == 0 and self.nLivello == self.MAX_LEVEL:
-            self.win()
+
+        # controllo fine livello/vittoria
+        if len(self.asteroidi) == 0:
+            self.nLivello += 1
+
+            if self.nLivello <= self.MAX_LEVEL:
+                self.creaAsteroidi()
+            elif self.nLivello > self.MAX_LEVEL:
+                self.win()
 
     def ripristina(self):  # ripristina il gioco dopo una collisione
         self.soundEsplosione.play()
@@ -136,18 +144,15 @@ class Asteroids():
         scheletroRect.center = self.razzo.posizione
         self.screen.blit(scheletro, scheletroRect)
         pygame.display.flip()
-        self.nVite -= 1
+        self.N_VITE -= 1
 
         time.sleep(1)
         # ripristino  posizione del razzo
         self.razzo.setPosizione(self.newPosizioneRazzo())
         self.razzo.setVelocità(Vector2(0, 0))
-        """for proiettile in self.proiettili[:]:  # elimino i proiettili
-            self.proiettili.remove(proiettile)"""
         self.proiettili.clear()
 
     # gestione dello spaw del razzo dopo una collisione
-    #ACCERTASI########################################################################
     def newPosizioneRazzo(self):
         run = True
         while run:
@@ -160,8 +165,27 @@ class Asteroids():
                     controllo = False
             if controllo == True:
                 run = False
-
         return temp
+
+    def main_loop(self):
+
+        while self.N_VITE > 0 and self.continua == True:
+            temp = []
+            # prendo i dati dalla coda
+            try:
+                temp = CODA_MOVIMENTI.get_nowait()  # get_nowait funzione non bloccante
+            except queue.Empty:
+                pass
+            if len(temp) == 4:
+                self.movimento = temp[0]  # assegno i dati alle variabili
+                self.direzione = temp[1]
+                self.pulsanteA = temp[2]
+                self.pulsanteB = temp[3]
+            self.gestioneInput()
+            self.gameLogic()
+            self.draw()
+        if self.N_VITE == 0:
+            self.gameOver()
 
     def starter(self):
         logo = carica_immagini("logo.png", (516, 132))
@@ -181,31 +205,10 @@ class Asteroids():
 
         continua = True
         while continua:
-
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     continua = False
                     self.soundTrack.play()
-
-    def main_loop(self):
-
-        while self.nVite > 0 and self.continua == True:
-            temp = []
-            # prendo i dati dalla coda
-            try:
-                temp = CODA_MODIMENTI.get_nowait()
-            except queue.Empty:
-                pass
-            if len(temp) == 4:
-                self.movimento = temp[0]
-                self.direzione = temp[1]
-                self.pulsanteA = temp[2]
-                self.pulsanteB = temp[3]
-            self.gestioneInput()
-            self.gameLogic()
-            self.draw()
-        if self.nVite == 0:
-            self.gameOver()
 
     def gameOver(self):
         imgGameOver = carica_immagini("GameOver.png", (400, 200))
@@ -229,13 +232,14 @@ class Asteroids():
                         self.continua = False  # quell del main loop
                     else:
                         continua = False
+
+        # ripristino tutto
         if self.continua == True:
-            self.nVite = 3
+            self.N_VITE = 3
             self.razzo.setPosizione((self.WIDTH/2, self.HEIGHT/2))
             self.razzo.setVelocità(Vector2(0, 0))
-            self.asteroidi.clear()
+            self.asteroidi.clear()  # pulisco la lista degli asteroidi e dei proiettili
             self.proiettili.clear()
-            self.nLivello -= 1
             self.creaAsteroidi()
             self.main_loop()
 
@@ -250,17 +254,16 @@ class Asteroids():
         continua = True
         while continua:
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        continua = False
-                        self.soundTrack.stop()
-                        self.continua = False
-                        print("HAI VINTO")
+                if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE) or event.type == pygame.QUIT:
+                    continua = False
+                    self.soundTrack.stop()
+                    self.continua = False
+                    print("HAI VINTO")
 
 
-class Read_Microbit(threading.Thread):
+class Read_Microbit(Thread):
     def __init__(self):
-        threading.Thread.__init__(self)
+        Thread.__init__(self)
         self.running = True
 
     def terminate(self):
@@ -275,7 +278,7 @@ class Read_Microbit(threading.Thread):
             data = s.readline().decode()
             data = data[0:-2]
             temp = data.split(" ")
-            CODA_MODIMENTI.put(temp)
+            CODA_MOVIMENTI.put(temp)
             time.sleep(0.07)
 
 

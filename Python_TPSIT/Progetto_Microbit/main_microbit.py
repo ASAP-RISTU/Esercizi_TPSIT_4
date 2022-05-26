@@ -1,5 +1,4 @@
 from microbit import *
-import music
 
 
 def animazione():
@@ -12,13 +11,14 @@ def animazione():
     display.clear()
 
 
+inclinazione = ""
+movimento = ""
+pulsanteA, pulsanteB = "", ""
+
+
 while True:
     asseX = accelerometer.get_x()  # neg=sx   pos=dx
     asseY = accelerometer.get_y()  # pos=giu  neg=avanti
-    inclinazione = ""
-    movimento = ""
-    pulsanteA, pulsanteB = "", ""
-    sparo = ["D4:2"]
 
     if asseX < -500:
         inclinazione = "sx"
@@ -42,10 +42,9 @@ while True:
 
     if button_b.get_presses():
         pulsanteB = "PREMUTO"
-        music.play(sparo)
-        #animazione()
+        animazione()
     else:
         pulsanteB = "NO"
 
     print(movimento, inclinazione, pulsanteA, pulsanteB)
-    sleep(70)
+    sleep(50)
