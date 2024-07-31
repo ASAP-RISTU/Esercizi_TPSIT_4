@@ -12,7 +12,7 @@ typedef struct s_queue_node { //creazione della struttura
 int is_empty(Queue_node*head) {  //funzione che controlla se la coda è vuota
     if(head==NULL) return 1;
     else
-        return 0;
+        return 0;  
 }
 
 void enqueue(Queue_node**head,Queue_node**tail,Queue_node*element) {   //funzione per creare un nuovo nodo e assegnare un valore al nodo precedente
